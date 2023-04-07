@@ -5,4 +5,4 @@ This is my personal typescript reciepes set I use as a reference for myself and 
 ### Table of contents
 
 - functional reciepes
-    + [Simple state machine in a functional way](./state-machine/readme.md)
+    + [Simple state machine in a functional way](./state-machine/)
