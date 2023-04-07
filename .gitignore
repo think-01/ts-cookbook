@@ -1,0 +1,4 @@
+# Project exclude paths
+/node_modules/
+/state-machine/example.js
+/state-machine/sm.js
