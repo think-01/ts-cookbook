@@ -1,12 +1,11 @@
-import {newStreamParser, Parser, runParsers} from "../parser";
-import {charParser} from "./char-parser";
+import { Parser } from "../parser";
+import { charParser } from "./char-parser";
+import { allOfParser } from "./all-of-parser";
 
-const literalParser = (pattern: string): Parser => stream => {
-    const run = runParsers(newStreamParser(stream))
-    const charParsers = pattern.split('').map(letter => charParser(letter))
-    const result = run(charParsers)
-
-    return [result.status, result.remaining]
-}
+const literalParser = (pattern: string): Parser => allOfParser(
+    pattern
+        .split('')
+        .map(letter => charParser(letter))
+)
 
 export { literalParser }

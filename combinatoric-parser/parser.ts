@@ -1,3 +1,5 @@
+import {charParser} from "./parsers/char-parser";
+
 type Parser = (stream: string) => [boolean, string]
 
 type StreamParser = {
@@ -29,8 +31,4 @@ const newStreamParser = (stream: string): StreamParser => {
     }
 }
 
-const runParsers = (parser: StreamParser) => (parsers: Parser[]) => parsers.reduce(
-    (parser, p: Parser) => parser.run(p),
-    parser)
-
-export { Parser, runParsers, newStreamParser }
+export { Parser, newStreamParser, StreamParser }

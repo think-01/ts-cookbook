@@ -4,7 +4,7 @@ const regexParser = (regex: RegExp): Parser => stream => {
     const flags = regex.ignoreCase ? 'i' : ''
     const sanitizedRegex = new RegExp(regex.source.replace(/^\^?(.*)(\.\*)?$/, '^($1)(.*)'), flags)
     let result
-console.log(sanitizedRegex)
+
     if ( (result = sanitizedRegex.exec(stream)) !== null) {
         return [true, result.length > 1 ? result[2] : '']
     }
