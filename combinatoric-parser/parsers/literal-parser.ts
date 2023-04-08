@@ -1,8 +1,8 @@
 import { Parser } from "../parser";
 import { charParser } from "./char-parser";
-import { streamParser } from "./stream-parser";
+import { allOfParser } from "./all-of-parser";
 
-const literalParser = (pattern: string): Parser => streamParser(
+const literalParser = (pattern: string): Parser => allOfParser(
     pattern
         .split('')
         .map(letter => charParser(letter))

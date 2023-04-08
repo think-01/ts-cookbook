@@ -14,12 +14,12 @@ const bypass = (stream: string): ParserExecutor => {
     }
 }
 
-const newParserExecutor = (stream: string): ParserExecutor => {
+const parserExecutor = (stream: string): ParserExecutor => {
     return {
         run: (fn: Parser) => {
             let [advance, remainingStream] = fn(stream)
             if (advance) {
-                return newParserExecutor(remainingStream)
+                return parserExecutor(remainingStream)
             } else {
                 return bypass(stream)
             }
@@ -29,4 +29,4 @@ const newParserExecutor = (stream: string): ParserExecutor => {
     }
 }
 
-export { Parser, newParserExecutor, ParserExecutor }
+export { Parser, parserExecutor, ParserExecutor }

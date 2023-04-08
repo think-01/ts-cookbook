@@ -1,13 +1,12 @@
-import { newParserExecutor, Parser } from "../parser";
+import {parserExecutor, Parser, ParserExecutor} from "../parser";
 
 const anyOfParser = (parsers: Parser[]): Parser => stream => {
-    const streamParser = newParserExecutor(stream)
+    const executor = parserExecutor(stream)
 
-    const satisfied: Parser | null = parsers.find((p: Parser) => streamParser.run(p).status)
+    const satisfied: ParserExecutor = parsers.map((p: Parser) => executor.run(p)).find(evaluated => evaluated.status)
 
-    if(satisfied !== null) {
-        const result = streamParser.run(satisfied)
-        return [result.status, result.remaining]
+    if(satisfied) {
+        return [satisfied.status, satisfied.remaining]
     }
 
     return [false, stream]
