@@ -47,3 +47,8 @@ const isAdult = (year: string) => {
 const yearOfBirth = regexParser(/\d\d\d\d/, isAdult),
 ```
 Any combination of nested parsers can be used. Source stream is being parsed by a structure of parsers from left to right. If parsing faile then all subsquent checks are bypassed but according to functional nature of code it does not throw any exception or anything. It just continues to the end by bypass path.
+
+### t.b.d.
+
+* functor for collecting error data
+* async parsers ( remote validating services )
