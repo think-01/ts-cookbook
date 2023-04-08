@@ -1,14 +1,12 @@
-import {charParser} from "./parsers/char-parser";
-
 type Parser = (stream: string) => [boolean, string]
 
-type StreamParser = {
-    run: (fn: Parser) => StreamParser
+type ParserExecutor = {
+    run: (fn: Parser) => ParserExecutor
     remaining: string,
     status: boolean
 }
 
-const bypass = (stream: string): StreamParser => {
+const bypass = (stream: string): ParserExecutor => {
     return {
         run: (fn: Parser) => bypass(stream),
         remaining: stream,
@@ -16,12 +14,12 @@ const bypass = (stream: string): StreamParser => {
     }
 }
 
-const newStreamParser = (stream: string): StreamParser => {
+const newParserExecutor = (stream: string): ParserExecutor => {
     return {
         run: (fn: Parser) => {
             let [advance, remainingStream] = fn(stream)
             if (advance) {
-                return newStreamParser(remainingStream)
+                return newParserExecutor(remainingStream)
             } else {
                 return bypass(stream)
             }
@@ -31,4 +29,4 @@ const newStreamParser = (stream: string): StreamParser => {
     }
 }
 
-export { Parser, newStreamParser, StreamParser }
+export { Parser, newParserExecutor, ParserExecutor }

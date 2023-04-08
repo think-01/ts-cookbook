@@ -12,7 +12,7 @@ const regexParser = (regex: RegExp): Parser => stream => {
     return [false, stream]
 }
 
-type Repetitions = number | '+' | '?' | '' | [number, number]
+type Repetitions = number | '*' | '+' | '?' | '' | [number, number]
 
 const makeRepeated = (regExSource: string, repetitions: Repetitions) => {
     if (typeof repetitions !== 'number') {

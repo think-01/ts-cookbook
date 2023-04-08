@@ -1,12 +1,16 @@
-import { newStreamParser, Parser, StreamParser } from "../parser";
-
-const checkParsers = (parser: StreamParser) => (parsers: Parser[]) => parsers.reduce(
-    (parser, p: Parser) => parser.run(p),
-    parser)
+import { newParserExecutor, Parser } from "../parser";
 
 const allOfParser = (parsers: Parser[]): Parser => stream => {
-    const result = checkParsers(newStreamParser(stream))(parsers)
-    return [result.status, result.remaining]
+    const streamParser = newParserExecutor(stream)
+
+    const satisfied: Parser[] = parsers.filter((p: Parser) => streamParser.run(p).status)
+
+    if(satisfied.length === parsers.length) {
+        const result = streamParser.run(satisfied[0])
+        return [result.status, result.remaining]
+    }
+
+    return [false, stream]
 }
 
 export { allOfParser }

@@ -1,26 +1,28 @@
-import { newStreamParser } from './parser'
+import { newParserExecutor } from './parser'
 import { literalParser } from "./parsers/literal-parser";
-import { regexParser, wordParser } from "./parsers/regex-parser";
-import { allOfParser } from "./parsers/all-of-parser";
+import {digitsParser, regexParser, spacesParser} from "./parsers/regex-parser";
+import { streamParser } from "./parsers/stream-parser";
 import {anyOfParser} from "./parsers/any-of-parser";
+import {charParser} from "./parsers/char-parser";
 
-let streamParser = newStreamParser("Ala ma kota")
+const monthsParser = anyOfParser(
+    ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    .map(m => literalParser(m))
+)
 
-const parser1 = allOfParser([
-    wordParser(3),
-    regexParser(/^[ma\s]{4}/),
-    literalParser("kota"),
+const longYearParser = regexParser(/[12][09]\d\d/)
+
+// Mon DD, YYYY
+const dateParser = streamParser([
+    monthsParser,
+    spacesParser('+'),
+    digitsParser(2),
+    charParser(','),
+    spacesParser('*'),
+    longYearParser
 ])
 
-const parser2 = allOfParser([
-    wordParser(3),
-    regexParser(/^[ma\s]{4}/),
-    literalParser("psa"),
-])
+const executor = newParserExecutor("Jan 01, 2010").run(dateParser)
 
-const parser = anyOfParser([parser1, parser2])
-
-streamParser = streamParser.run(parser)
-
-if (streamParser.status) console.log("Stream parsed")
-else console.error(`Parsing error at "${streamParser.remaining}"`)
+if (executor.status) console.log("Stream parsed")
+else console.error(`Parsing error at "${executor.remaining}"`)

@@ -1,7 +1,7 @@
-import { newStreamParser, Parser } from "../parser";
+import { newParserExecutor, Parser } from "../parser";
 
 const anyOfParser = (parsers: Parser[]): Parser => stream => {
-    const streamParser = newStreamParser(stream)
+    const streamParser = newParserExecutor(stream)
 
     const satisfied: Parser | null = parsers.find((p: Parser) => streamParser.run(p).status)
 
