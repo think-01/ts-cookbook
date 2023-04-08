@@ -2,7 +2,7 @@
 
 ### install and run example
 
-`npm i && tsc && node state-machine/example.js`
+`npm i && ts-node state-machine/example.js`
 
 ### usage
 to instantiate your machine you need to deine its states and transistions as unions:

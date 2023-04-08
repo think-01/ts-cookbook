@@ -33,6 +33,5 @@ const makeRepeated = (regExSource: string, repetitions: Repetitions) => {
 const lettersParser = (r: Repetitions = '') => regexParser(new RegExp(makeRepeated('[a-zA-Z]',r )))
 const digitsParser = (r: Repetitions = '') => regexParser(new RegExp(makeRepeated('\\d', r)))
 const spacesParser = (r: Repetitions = '') => regexParser(new RegExp(makeRepeated('\\s', r)))
-const wordParser = (r: Repetitions = '') => regexParser(new RegExp(makeRepeated('\\w', r)))
 
-export { regexParser, lettersParser, digitsParser, spacesParser, wordParser }
+export { regexParser, lettersParser, digitsParser, spacesParser }

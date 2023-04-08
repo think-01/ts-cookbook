@@ -6,3 +6,4 @@ This is my personal typescript reciepes set I use as a reference for myself and 
 
 - functional reciepes
     + [Simple state machine in a functional way](./state-machine/)
+    + [Combinatoric parsers](./combinatoric parsers/)
