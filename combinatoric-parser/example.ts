@@ -10,9 +10,14 @@ const monthsParser = anyOfParser(
     .map(m => literalParser(m))
 )
 
+const isAdult = (year: string) => {
+    const birthYear = parseInt(year)
+    const currentYear: number =  new Date().getFullYear()
+    return currentYear - birthYear >= 18
+}
 
 const longYearParser = anyOfParser([
-    regexParser(/20\d\d/, year => parseInt(year) < 2023),
+    regexParser(/20\d\d/, isAdult),
     regexParser(/19\d\d/),
 ])
 
@@ -26,7 +31,7 @@ const dateParser = allOfParser([
     longYearParser
 ])
 
-const executor = parserExecutor("Jan 01, 2030").run(dateParser)
+const executor = parserExecutor("Sep 17, 1972").run(dateParser)
 
 if (executor.status) console.log("Stream parsed")
 else console.error(`Parsing error at "${executor.remaining}"`)

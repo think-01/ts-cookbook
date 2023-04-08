@@ -1,4 +1,5 @@
-type Parser = (stream: string) => [boolean, string]
+type Validator = ((stream: string) => boolean) | undefined
+type Parser = (stream: string, validator?: Validator) => [boolean, string]
 
 type ParserExecutor = {
     run: (fn: Parser) => ParserExecutor
@@ -17,11 +18,11 @@ const bypass = (stream: string): ParserExecutor => {
 const parserExecutor = (stream: string): ParserExecutor => {
     return {
         run: (fn: Parser) => {
-            let [advance, remainingStream] = fn(stream)
-            if (advance) {
+            const [success, remainingStream] = fn(stream)
+            if (success) {
                 return parserExecutor(remainingStream)
             } else {
-                return bypass(stream)
+                return bypass(remainingStream)
             }
         },
         remaining: stream,
@@ -29,4 +30,4 @@ const parserExecutor = (stream: string): ParserExecutor => {
     }
 }
 
-export { Parser, parserExecutor, ParserExecutor }
+export { Parser, Validator, parserExecutor, ParserExecutor }

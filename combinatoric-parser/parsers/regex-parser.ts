@@ -1,19 +1,15 @@
-import {Parser} from "../parser";
+import {Parser, Validator} from "../parser";
 
-type Validator = ((stream: string) => boolean) | null
-
-const regexParser = (regex: RegExp, validator: Validator = null): Parser => stream => {
+const regexParser = (regex: RegExp, validator?: Validator): Parser => stream => {
     const flags = regex.ignoreCase ? 'i' : ''
     const sanitizedRegex = new RegExp(regex.source.replace(/^\^?(.*)(\.\*)?$/, '^($1)(.*)'), flags)
     let result
 
     if ( (result = sanitizedRegex.exec(stream)) !== null) {
-        const [all, match, remaining] = result
-        if(validator !== null && !validator(match)) {
-            return [false, all]
+        const [, match, remaining] = result
+        if(validator === undefined || validator(match)) {
+            return [true, remaining]
         }
-
-        return [true, remaining]
     }
 
     return [false, stream]
