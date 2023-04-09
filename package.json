@@ -9,11 +9,19 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "This is my personal typescript reciepes set I use as a reference for myself and as a source of inspiration for others. I hope you will find it useful.",
   "devDependencies": {
     "@types/node": "^18.15.11"
   },
   "dependencies": {
     "ts-node": "^10.9.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/think-01/ts-cookbook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/think-01/ts-cookbook/issues"
+  },
+  "homepage": "https://github.com/think-01/ts-cookbook#readme"
 }
